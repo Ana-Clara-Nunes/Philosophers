@@ -6,7 +6,7 @@
 /*   By: anunes-o <anunes-o@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 13:58:08 by anunes-o          #+#    #+#             */
-/*   Updated: 2026/06/01 15:01:51 by anunes-o         ###   ########.fr       */
+/*   Updated: 2026/06/01 23:19:17 by anunes-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ void	monitor(t_data *data)
 				data->simulation_over = 1;
 				pthread_mutex_unlock(&data->death_mutex);
 			}
-			if (data->must_eat_count == -1)
-				break ;
-			if (satisfied_philos(data))
+			if (data->must_eat_count != -1 && satisfied_philos(data))
 			{
 				pthread_mutex_lock(&data->death_mutex);
 				data->simulation_over = 1;
