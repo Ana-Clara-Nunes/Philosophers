@@ -65,6 +65,36 @@ typedef struct s_philo
 //*        - Function declarations and their respective .c files -    	      */
 /* ************************************************************************** */
 // * parsing.c
-int	parse_args(char **argv, t_data *data);
+int		parse_args(char **argv, t_data *data);
+
+// * time_utils.c
+long	get_time(void);
+int		ft_usleep(long secs);
+long	get_lapse_time(long stamp);
+
+// * bon_appetite.c
+void	take_forks(t_philo *philo);
+void	eat(t_philo *philo);
+
+// *routines.c
+void	print_action(t_philo *philo, char *action);
+int		is_simulation_over(t_data *data);
+void	*routine(void *arg);
+void	to_sleep(t_philo	*philo);
+void	to_think(t_philo	*philo);
+
+// * cleanup.c
+int		cleanup_exit(t_data *data);
+void	cleanup(t_data *data);
+
+// * init.c
+int		init_forks(t_data *data);
+int		init_philo(t_data *data);
+int		init_table(t_data *data);
+
+// * monitor.c
+void	monitor(t_data *data);
+int		satisfied_philos(t_data *data);
+long	save_meal(t_data *data, int i);
 
 #endif

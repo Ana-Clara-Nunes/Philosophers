@@ -6,7 +6,7 @@
 /*   By: anunes-o <anunes-o@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 16:49:54 by anunes-o          #+#    #+#             */
-/*   Updated: 2026/05/29 16:12:39 by anunes-o         ###   ########.fr       */
+/*   Updated: 2026/06/02 16:30:08 by anunes-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,31 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = ((t_philo *) arg);
+	if (philo->data->nb_philos == 1)
+	{
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		print_action(philo, "has taken a fork");
+		ft_usleep(philo->data->time_to_die);
+		pthread_mutex_unlock(&philo->left_fork->mutex);
+		return (NULL);
+	}
 	while (!is_simulation_over(philo->data))
 	{
 		take_forks(philo);
 		eat(philo);
-		sleep(philo);
-		think(philo);
+		to_sleep(philo);
+		to_think(philo);
 	}
 	return (NULL);
 }
 
-void	sleep(t_philo	*philo)
+void	to_sleep(t_philo	*philo)
 {
 	print_action(philo, "is sleeping");
 	ft_usleep(philo->data->time_to_sleep);
 }
 
-void	think(t_philo	*philo)
+void	to_think(t_philo	*philo)
 {
 	print_action(philo, "is thinking");
 }

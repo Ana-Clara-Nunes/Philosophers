@@ -6,35 +6,33 @@
 #    By: anunes-o <anunes-o@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/27 13:12:50 by anunes-o          #+#    #+#              #
-#    Updated: 2026/06/01 13:59:56 by anunes-o         ###   ########.fr        #
+#    Updated: 2026/06/02 16:12:32 by anunes-o         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= philo
 CC 		:= cc
-CFLAGS 	:= -Wall -Wextra -Werror
+CFLAGS 	:= -Wall -Wextra -Werror -I.
 
 SRC_DIR := src
 
-SRC 	:= $(SRC_DIR)
-
-/* ************************************************************************** */
-/*                               SOURCE			                              */
-/* ************************************************************************** */
-SRC		:= main.c
-		$(SRC)/init.c \
-		$(SRC)/pasing.c \
-		$(SRC)/routines.c \
-		$(SRC)/time_utils.c \
-		$(SRC)/cleanup.c \
-		$(SRC)/bon_appetit.c \
-		$(SRC)/monitor.c \
+# **************************************************************************** #
+#                               SOURCE			                              #
+# **************************************************************************** #
+SRC		:= main.c \
+		$(SRC_DIR)/init.c \
+		$(SRC_DIR)/parsing.c \
+		$(SRC_DIR)/routines.c \
+		$(SRC_DIR)/time_utils.c \
+		$(SRC_DIR)/cleanup.c \
+		$(SRC_DIR)/bon_appetit.c \
+		$(SRC_DIR)/monitor.c \
 		
 OBJS	:= $(SRC:.c=.o)
 
-/* ************************************************************************** */
-/*                                 RULES		                              */
-/* ************************************************************************** */
+# **************************************************************************** #
+#                                 RULES		                              #
+# **************************************************************************** #
 
 all: $(NAME)
 
@@ -43,12 +41,13 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -f $(OBJS)
-	$(MAKE) -C clean --no-print-directory
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) fclean --no-print-directory
 
 re: fclean all
 
+valgrind: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./philo 
+	
 .PHONY: all clean fclean re
