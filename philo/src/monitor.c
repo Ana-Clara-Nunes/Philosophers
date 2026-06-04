@@ -6,7 +6,7 @@
 /*   By: anunes-o <anunes-o@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 13:58:08 by anunes-o          #+#    #+#             */
-/*   Updated: 2026/06/01 23:19:17 by anunes-o         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:34:25 by anunes-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,18 @@ void	monitor(t_data *data)
 		while (i < data->nb_philos)
 		{
 			last_meal = save_meal(data, i);
-			if (get_lapse_time(last_meal) >= data->time_to_die)
+			if (get_lapse_time(last_meal) > data->time_to_die)
 			{
-				print_action(&data->philos[i], "died");
-				pthread_mutex_lock(&data->death_mutex);
-				data->simulation_over = 1;
-				pthread_mutex_unlock(&data->death_mutex);
+				print_death(data, data->philos[i].id);
+				return ;
 			}
 			if (data->must_eat_count != -1 && satisfied_philos(data))
 			{
-				pthread_mutex_lock(&data->death_mutex);
-				data->simulation_over = 1;
-				pthread_mutex_unlock(&data->death_mutex);
+				print_all_eat(data);
+				return ;
 			}
 			i++;
+			usleep(100);
 		}
 	}
 }
@@ -51,22 +49,19 @@ long	save_meal(t_data *data, int i)
 	return (meal);
 }
 
-int	satisfied_philos(t_data *data)
+void	print_death(t_data *data, int id)
 {
-	int	i;
-	int	check;
+	pthread_mutex_lock(&data->death_mutex);
+	data->simulation_over = 1;
+	pthread_mutex_unlock(&data->death_mutex);
+	printf("[%ld] %d died\n", get_lapse_time(data->start_time), id);
+}
 
-	i = 0;
-	check = 0;
-	while (i < data->nb_philos)
-	{
-		pthread_mutex_lock(&data->death_mutex);
-		if (data->philos[i].meals_eaten == data->must_eat_count)
-			check++;
-		i++;
-		pthread_mutex_unlock(&data->death_mutex);
-	}
-	if (check == data->nb_philos)
-		return (1);
-	return (0);
+void	print_all_eat(t_data *data)
+{
+	pthread_mutex_lock(&data->death_mutex);
+	data->simulation_over = 1;
+	pthread_mutex_unlock(&data->death_mutex);
+	printf("[%ld] All philosophers have eaten %d times\n",
+		get_lapse_time(data->start_time), data->must_eat_count);
 }

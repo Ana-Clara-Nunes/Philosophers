@@ -6,7 +6,7 @@
 /*   By: anunes-o <anunes-o@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 16:49:54 by anunes-o          #+#    #+#             */
-/*   Updated: 2026/06/02 16:30:08 by anunes-o         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:22:40 by anunes-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	*routine(void *arg)
 		ft_usleep(philo->data->time_to_die);
 		pthread_mutex_unlock(&philo->left_fork->mutex);
 		return (NULL);
+	}
+	if (philo->id % 2 == 0)
+	{
+		ft_usleep((philo->data->time_to_die) / 2);
 	}
 	while (!is_simulation_over(philo->data))
 	{

@@ -75,6 +75,7 @@ long	get_lapse_time(long stamp);
 // * bon_appetite.c
 void	take_forks(t_philo *philo);
 void	eat(t_philo *philo);
+int		satisfied_philos(t_data *data);
 
 // *routines.c
 void	print_action(t_philo *philo, char *action);
@@ -96,5 +97,7 @@ int		init_table(t_data *data);
 void	monitor(t_data *data);
 int		satisfied_philos(t_data *data);
 long	save_meal(t_data *data, int i);
+void	print_death(t_data *data, int id);
+void	print_all_eat(t_data *data);
 
 #endif

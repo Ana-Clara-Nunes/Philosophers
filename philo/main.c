@@ -6,7 +6,7 @@
 /*   By: anunes-o <anunes-o@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 13:48:00 by anunes-o          #+#    #+#             */
-/*   Updated: 2026/06/02 16:16:18 by anunes-o         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:47:14 by anunes-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	memset(&data, 0, sizeof(t_data));
-	if (argc < 5 || argc > 6)
-		return (0);
-	if (!parse_args(argv, &data))
-		return (0);
+	if ((argc < 5 || argc > 6) || !(parse_args(argv, &data)))
+	{
+		printf("Error: Invalid number of arguments\n");
+		printf("Usage: ./philo <num> <die> <eat> <sleep> [must_eat]\n");
+		return (cleanup_exit(&data));
+	}
 	init_table(&data);
 	if (!init_forks(&data))
 		return (cleanup_exit(&data));

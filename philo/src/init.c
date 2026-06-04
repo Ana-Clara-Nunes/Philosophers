@@ -6,7 +6,7 @@
 /*   By: anunes-o <anunes-o@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 15:28:57 by anunes-o          #+#    #+#             */
-/*   Updated: 2026/05/29 11:11:03 by anunes-o         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:34:15 by anunes-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ int	init_table(t_data *data)
 	data->simulation_over = 0;
 	return (1);
 }
-
